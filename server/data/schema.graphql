@@ -1,0 +1,76 @@
+type Cliente {
+  id: ID
+  nombre: String
+  apellido: String
+  empresa: String
+  email: String
+  edad: Int
+  tipo: TipoCliente
+  pedidos: [Pedido]
+  emails: [Email]
+}
+
+type Email {
+  email: String
+}
+
+type Pedido {
+  producto: String
+  precio: Int
+}
+
+"""
+ASIGNA LA CATEGORIA DE CLIENTE
+"""
+enum TipoCliente {
+  BASICO
+  PREMIUM
+}
+
+type Query {
+  getClientes(limite: Int): [Cliente]
+  getCliente(id: ID): Cliente
+}
+
+"""
+CAMPOS PARA LOS PEDIDOS NUEVOS
+"""
+input PedidoInput {
+  producto: String
+  precio: Int
+}
+
+"""
+CAMPOS PARA LOS CORREOS DE LOS CLIENTES
+"""
+input EmailInput {
+  email: String
+}
+
+"""
+CAMPOS PARA LOS CLIENTES NUEVOS
+"""
+input ClienteInput {
+  id: ID
+  nombre: String!
+  apellido: String!
+  empresa: String!
+  email: String!
+  edad: Int!
+  tipo: TipoCliente!
+  pedidos: [PedidoInput]
+  emails: [EmailInput]
+}
+"""
+MUTATIONS PARA CREAR CLIENTES
+"""
+type Mutation {
+  #Nombre del resolver, input con datos y valor que rotar
+
+  """
+  TE PERMITE CREAR NUEVOS CLIENTES
+  """
+  crearCliente(input: ClienteInput): Cliente
+  actualizarCliente(input: ClienteInput): Cliente
+  eliminarCliente(id: ID!): String
+}
